@@ -1,30 +1,45 @@
-name: Simple Test
+name: Greeting Workflow
 
+# Trigger on push to any branch
 on:
   push:
-    branches: [cicd]
-  pull_request:
-    branches: [cicd]
 
 jobs:
-  test:
+  greet:
+    name: Greeting Job
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+      # Step 2: Print greeting
+      - name: Say hello
+        run: |
+          echo "Hello from GitHub Actions!"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
 
-      - name: Upgrade pip
-        run: python -m pip install --upgrade pip
+      # Step 3: Show runner environment
+      - name: Show environment info
+        run: |
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Python version:"
+          python --version
+          echo "Node version:"
+          node --version
+          echo "Docker version:"
+          docker --version
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run tests
-        run: pytest || exit 1
+      # Step 4: Optional: list installed tools
+      - name: List all installed tools
+        run: |
+          echo "Installed tools:"
+          which python
+          which node
+          which docker
+          echo "All environment variables:"
+          env
 
