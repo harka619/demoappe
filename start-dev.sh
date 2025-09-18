@@ -11,6 +11,6 @@ done
 echo "✅ PostgreSQL is ready!"
 
 # Start Flask development server
-# The Flask app will handle database initialization on first request
+# The Flask appe will handle database initialization on first request
 echo "🌟 Starting Flask development server..."
 exec python app.py
